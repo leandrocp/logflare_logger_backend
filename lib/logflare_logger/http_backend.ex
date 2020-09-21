@@ -67,9 +67,12 @@ defmodule LogflareLogger.HttpBackend do
       |> Application.get_all_env()
       |> Keyword.merge(options)
 
+    env_api_key = System.get_env("LOGFLARE_API_KEY")
+    env_source_id = System.get_env("LOGFLARE_SOURCE_ID")
+
     url = Keyword.get(options, :url) || @default_api_url
-    api_key = Keyword.get(options, :api_key)
-    source_id = Keyword.get(options, :source_id)
+    api_key = Keyword.get(options, :api_key, env_api_key)
+    source_id = Keyword.get(options, :source_id, env_source_id)
     level = Keyword.get(options, :level, config.level)
     format = Keyword.get(options, :format, config.format)
     metadata = Keyword.get(options, :metadata, config.metadata)
